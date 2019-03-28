@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html lang="zh-cn" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+    <title>Title</title>
+    <script th:src="@{~/public/commonJs.js}"></script>
+    <script th:src="@{~/public/commonCss.js}"></script>
+</head>
+<body>
+    <h1 th:text="'Hello, ' + ${name}"/>
+</body>
+</html>

@@ -1,0 +1,15 @@
+spring:
+  profiles:
+    active: @profileActive@
+  thymeleaf:
+    cache: false
+    prefix: classpath:/templates/
+    suffix: .html
+    encoding: UTF-8
+    servlet:
+      content-type: text/html
+    mode: HTML5
+devtools:
+  livereload:
+    enabled: true
+    port: 35729
