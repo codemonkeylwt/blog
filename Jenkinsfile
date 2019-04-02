@@ -1,13 +1,13 @@
 pipeline {
     agent any
     stages {
-        steps{
-            stage('Checkout') {
+        stage('Checkout') {
+            steps {
                 checkout([$class: 'GitSCM', branches: [[name: '*/master']], doGenerateSubmoduleConfigurations: false, extensions: [], submoduleCfg: [], userRemoteConfigs: [[credentialsId: 'f80bc816-b1a2-4193-9b19-539c92a31706', url: 'git@github.com:codemonkeylwt/blog.git']]])
             }
         }
-        steps{
-            stage('build') {
+        stage('build'){
+            steps {
                 sh label: '', script: 'mvn clean package'
             }
         }
