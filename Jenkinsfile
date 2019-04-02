@@ -8,7 +8,10 @@ pipeline {
         }
         stage('build'){
             steps {
-                sh label: '', script: 'maven clean package'
+                withMaven(
+                    maven: 'maven') {
+                        sh "mvn clean install -Dmaven.test.skip=true"
+                    }
             }
         }
     }
