@@ -20,13 +20,16 @@ pipeline {
                         emailext (
                             subject: "'${env.JOB_NAME} [${env.BUILD_NUMBER}]' 更新失败",
                             body: """
-                            详情：
-                            FAILURE: Job '${env.JOB_NAME} [${env.BUILD_NUMBER}]'
-                            状态：${env.JOB_NAME} jenkins 更新失败
-                            URL ：${env.BUILD_URL}
-                            项目名称 ：${env.JOB_NAME}
-                            项目更新进度：${env.BUILD_NUMBER}
-                            内容：nginx进程不存在
+                            <html>
+                            <body>
+                            <p>详情：</p>
+                            <p>SUCCESSFUL: Job '${env.JOB_NAME} [${env.BUILD_NUMBER}]'</p>
+                            <p>状态：${env.JOB_NAME} jenkins git拉取代码失败</p>
+                            <p>URL ：${env.BUILD_URL}</p>
+                            <p>项目名称 ：${env.JOB_NAME}</p>
+                            <p>项目更新进度：${env.BUILD_NUMBER}</p>
+                            </body>
+                            <html>
                             """,
                             to: "${USERMAIL}",
                             recipientProviders: [[$class: 'DevelopersRecipientProvider']]
@@ -37,13 +40,35 @@ pipeline {
         }
         stage('Build'){
             steps {
-                withMaven(
-                    maven: 'maven') {
-                        sh label: '', script: 'mvn clean install -Dmaven.test.skip=true'
+                script{
+                    try {
+                        withMaven(
+                            maven: 'maven') {
+                                sh label: '', script: 'mvna clean install -Dmaven.test.skip=true'
+                            }
+                        sh label: '', script: 'cd /data/jenkins/workspace/blog/'
+                        sh label: '', script: 'chmod 777 shell/*'
+                        sh label: '', script: './shell/copy_jars.sh'
+                    } catch (exc) {
+                        currentBuild.result = "FAILURE"
+                        emailext (
+                            subject: "'${env.JOB_NAME} [${env.BUILD_NUMBER}]' 更新失败",
+                            body: """
+                            <html>
+                            <body>
+                            <p>详情：</p>
+                            <p>SUCCESSFUL: Job '${env.JOB_NAME} [${env.BUILD_NUMBER}]'</p>
+                            <p>状态：${env.JOB_NAME} jenkins maven构建失败</p>
+                            <p>URL ：${env.BUILD_URL}</p>
+                            <p>项目名称 ：${env.JOB_NAME}</p>
+                            <p>项目更新进度：${env.BUILD_NUMBER}</p>
+                            </body>
+                            <html>
+                            """,
+                            to: "${USERMAIL}",
+                            recipientProviders: [[$class: 'DevelopersRecipientProvider']]
+                        )
                     }
-                sh label: '', script: 'cd /data/jenkins/workspace/blog/'
-                sh label: '', script: 'chmod 777 shell/*'
-                sh label: '', script: './shell/copy_jars.sh'
             }
         }
         stage('Stop Old'){
@@ -53,26 +78,32 @@ pipeline {
         }
         stage('Run'){
             steps {
-                sh label: '', script: 'JENKINS_NODE_COOKIE=dontKillMe nohup java -jar /opt/blog/app/blog-index.jar > /opt/blog/logs/index/startup.log &'
+                script{
+                    try {
+                        sh label: '', script: 'JENKINS_NODE_COOKIE=dontKillMe nohup java -jar /opt/blog/app/blog-index.jar > /opt/blog/logs/index/startup.log &'
+                    } catch (exc) {
+                        currentBuild.result = "FAILURE"
+                        emailext (
+                            subject: "'${env.JOB_NAME} [${env.BUILD_NUMBER}]' 更新失败",
+                            body: """
+                            <html>
+                            <body>
+                            <p>详情：</p>
+                            <p>SUCCESSFUL: Job '${env.JOB_NAME} [${env.BUILD_NUMBER}]'</p>
+                            <p>状态：${env.JOB_NAME} jenkins java启动失败</p>
+                            <p>URL ：${env.BUILD_URL}</p>
+                            <p>项目名称 ：${env.JOB_NAME}</p>
+                            <p>项目更新进度：${env.BUILD_NUMBER}</p>
+                            </body>
+                            <html>
+                            """,
+                            to: "${USERMAIL}",
+                            recipientProviders: [[$class: 'DevelopersRecipientProvider']]
+                        )
+                    }
+                }
             }
         }
     }
 
-    post {
-        success {
-            emailext (
-                subject: "'${env.JOB_NAME} [${env.BUILD_NUMBER}]' 更新正常",
-                body: """
-                详情：
-                SUCCESSFUL: Job '${env.JOB_NAME} [${env.BUILD_NUMBER}]'
-                状态：${env.JOB_NAME} jenkins 更新运行正常
-                URL ：${env.BUILD_URL}
-                项目名称 ：${env.JOB_NAME}
-                项目更新进度：${env.BUILD_NUMBER}
-                """,
-                to: "${USERMAIL}",
-                recipientProviders: [[$class: 'DevelopersRecipientProvider']]
-            )
-        }
-    }
 }
