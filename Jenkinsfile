@@ -1,10 +1,13 @@
 pipeline {
     agent any
-    def ITEMNAME = "webapp"
-    def DESTPATH = "/data/wwwroot"
-    def SRCPATH = "~/workspace/test"
-    def BUILD_USER = "mark"
-    def USERMAIL = "nbliuwentao@gmail.com"
+
+    environment {
+        def ITEMNAME = "webapp"
+        def DESTPATH = "/data/wwwroot"
+        def SRCPATH = "~/workspace/test"
+        def BUILD_USER = "mark"
+        def USERMAIL = "nbliuwentao@gmail.com"
+    }
 
     stages {
         stage('Checkout') {
