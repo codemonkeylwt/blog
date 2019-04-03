@@ -42,13 +42,13 @@ pipeline {
                         sh label: '', script: 'mvn clean install -Dmaven.test.skip=true'
                     }
                 sh label: '', script: 'cd /data/jenkins/workspace/blog/'
-                sh label: '', script: 'chmod 777 copy_jars.sh'
-                sh label: '', script: './copy_jars.sh'
+                sh label: '', script: 'chmod 777 shell/*'
+                sh label: '', script: './shell/copy_jars.sh'
             }
         }
         stage('Stop Old'){
             steps {
-                sh label: '', script: 'jps |  grep \'blog\' | awk \'{print $1}\' | xargs kill -15'
+                sh label: '', script: './shell/stop_all.sh'
             }
         }
         stage('Run'){
