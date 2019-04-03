@@ -13,15 +13,17 @@ pipeline {
                         sh label: '', script: 'mvn clean install -Dmaven.test.skip=true'
                     }
             }
-        }
-        stage('Run'){
             when {
                 expression {
                     currentBuild.result == null || currentBuild.result == 'SUCCESS'
                 }
             }
+            sh label: '', script: 'cd /data/jenkins/workspace/blog/'
+            sh label: '', script: './copy_jars.sh'
+        }
+        stage('Run'){
             steps {
-                sh label: '', script: 'JENKINS_NODE_COOKIE=dontKillMe nohup java -jar /var/jenkins_home/workspace/blog/index/target/index.jar > /var/jenkins_home/logs/index/startup.log &'
+                sh label: '', script: 'JENKINS_NODE_COOKIE=dontKillMe nohup java -jar /opt/blog/app/index.jar > /opt/blog/logs/index/startup.log &'
             }
         }
     }
