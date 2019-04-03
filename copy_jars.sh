@@ -14,4 +14,6 @@ cd /opt/blog/
 
 rm -f app
 
-ln -s APP_DIR app
+ln -s $APP_DIR app
+
+chmod 777 app/*
