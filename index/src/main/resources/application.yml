@@ -14,4 +14,4 @@ devtools:
     enabled: true
     port: 35729
 server:
-  port: 50000
+  port: 80
