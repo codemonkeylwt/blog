@@ -21,7 +21,7 @@ pipeline {
                 }
             }
             steps {
-                sh label: '', script: 'nohup java -jar /var/jenkins_home/workspace/blog/index/target/index.jar > /var/jenkins_home/logs/index/startup.log &'
+                sh label: '', script: 'nohup java -jar /var/jenkins_home/workspace/blog/index/target/index.jar &'
             }
         }
     }
