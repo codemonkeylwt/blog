@@ -80,6 +80,11 @@ pipeline {
         }
 
         stage('Stop Old'){
+            when {
+                expression {
+                    currentBuild.result == null || currentBuild.result == 'SUCCESS'
+                }
+            }
             steps {
                 sh label: '', script: './shell/stop_all.sh'
             }
