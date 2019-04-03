@@ -48,7 +48,7 @@ pipeline {
         }
         stage('Stop Old'){
             steps {
-                sh label: '', script: 'jps |  grep 'blog' | awk '{print $1}' | xargs kill -15'
+                sh label: '', script: "jps |  grep 'blog' | awk '{print $1}' | xargs kill -15"
             }
         }
         stage('Run'){
