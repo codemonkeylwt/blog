@@ -38,7 +38,13 @@ pipeline {
                 }
             }
         }
+
         stage('Build'){
+            when {
+                expression {
+                    currentBuild.result == null || currentBuild.result == 'SUCCESS'
+                }
+            }
             steps {
                 script{
                     try {
@@ -69,14 +75,22 @@ pipeline {
                             recipientProviders: [[$class: 'DevelopersRecipientProvider']]
                         )
                     }
+                }
             }
         }
+
         stage('Stop Old'){
             steps {
                 sh label: '', script: './shell/stop_all.sh'
             }
         }
+
         stage('Run'){
+            when {
+                 expression {
+                    currentBuild.result == null || currentBuild.result == 'SUCCESS'
+                 }
+            }
             steps {
                 script{
                     try {
@@ -104,6 +118,7 @@ pipeline {
                 }
             }
         }
+
     }
 
 }
