@@ -12,24 +12,26 @@ pipeline {
     stages {
         stage('Checkout') {
             steps {
-                try {
-                    git credentialsId: '81a30c1f-8e72-4bfa-a5d6-fa7dfb2e1abf', url: 'git@github.com:codemonkeylwt/blog.git'
-                } catch (exc) {
-                    currentBuild.result = "FAILURE"
-                    emailext (
-                        subject: "'${env.JOB_NAME} [${env.BUILD_NUMBER}]' 更新失败",
-                        body: """
-                        详情：
-                        FAILURE: Job '${env.JOB_NAME} [${env.BUILD_NUMBER}]'
-                        状态：${env.JOB_NAME} jenkins 更新失败
-                        URL ：${env.BUILD_URL}
-                        项目名称 ：${env.JOB_NAME}
-                        项目更新进度：${env.BUILD_NUMBER}
-                        内容：nginx进程不存在
-                        """,
-                        to: "${USERMAIL}",
-                        recipientProviders: [[$class: 'DevelopersRecipientProvider']]
-                    )
+                script{
+                    try {
+                        git credentialsId: '81a30c1f-8e72-4bfa-a5d6-fa7dfb2e1abf', url: 'git@github.com:codemonkeylwt/blog.git'
+                    } catch (exc) {
+                        currentBuild.result = "FAILURE"
+                        emailext (
+                            subject: "'${env.JOB_NAME} [${env.BUILD_NUMBER}]' 更新失败",
+                            body: """
+                            详情：
+                            FAILURE: Job '${env.JOB_NAME} [${env.BUILD_NUMBER}]'
+                            状态：${env.JOB_NAME} jenkins 更新失败
+                            URL ：${env.BUILD_URL}
+                            项目名称 ：${env.JOB_NAME}
+                            项目更新进度：${env.BUILD_NUMBER}
+                            内容：nginx进程不存在
+                            """,
+                            to: "${USERMAIL}",
+                            recipientProviders: [[$class: 'DevelopersRecipientProvider']]
+                        )
+                    }
                 }
             }
         }
@@ -44,9 +46,14 @@ pipeline {
                 sh label: '', script: './copy_jars.sh'
             }
         }
+        stage('Stop Old'){
+            steps {
+                sh label: '', script: 'jps |  grep 'blog' | awk '{print $1}' | xargs kill -15'
+            }
+        }
         stage('Run'){
             steps {
-                sh label: '', script: 'JENKINS_NODE_COOKIE=dontKillMe nohup java -jar /opt/blog/app/index.jar > /opt/blog/logs/index/startup.log &'
+                sh label: '', script: 'JENKINS_NODE_COOKIE=dontKillMe nohup java -jar /opt/blog/app/blog-index.jar > /opt/blog/logs/index/startup.log &'
             }
         }
     }
