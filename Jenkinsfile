@@ -21,7 +21,7 @@ pipeline {
                 }
             }
             steps {
-                sh label: '', script: 'java -jar /var/jenkins_home/workspace/blog/index/target/index.jar'
+                sh label: '', script: 'nohup java -jar -Dhudson.util.ProcessTree.disable=true /var/jenkins_home/workspace/blog/index/target/index.jar > /var/jenkins_home/logs/index/startup.log &'
             }
         }
     }
