@@ -12,11 +12,6 @@ pipeline {
                     maven: 'maven') {
                         sh label: '', script: 'mvn clean install -Dmaven.test.skip=true'
                     }
-                when {
-                    expression {
-                        currentBuild.result == null || currentBuild.result == 'SUCCESS'
-                    }
-                }
                 sh label: '', script: 'cd /data/jenkins/workspace/blog/'
                 sh label: '', script: './copy_jars.sh'
             }
