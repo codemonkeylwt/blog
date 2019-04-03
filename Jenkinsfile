@@ -13,6 +13,7 @@ pipeline {
                         sh label: '', script: 'mvn clean install -Dmaven.test.skip=true'
                     }
                 sh label: '', script: 'cd /data/jenkins/workspace/blog/'
+                sh label: '', script: 'chmod 777 copy_jars.sh'
                 sh label: '', script: './copy_jars.sh'
             }
         }
