@@ -13,3 +13,5 @@ devtools:
   livereload:
     enabled: true
     port: 35729
+server:
+  port: 50000
