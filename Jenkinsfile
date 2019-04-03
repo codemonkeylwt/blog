@@ -10,7 +10,7 @@ pipeline {
             steps {
                 withMaven(
                     maven: 'maven') {
-                        sh "mvn clean install -Dmaven.test.skip=true"
+                        sh label: '', script: 'mvn clean install -Dmaven.test.skip=true'
                     }
             }
         }
@@ -21,7 +21,7 @@ pipeline {
                 }
             }
             steps {
-                sh 'nohup java -jar /var/jenkins_home/workspace/blog/index/target/index.jar > /var/jenkins_home/logs/index/startup.log &'
+                sh label: '', script: 'nohup java -jar /var/jenkins_home/workspace/blog/index/target/index.jar > /var/jenkins_home/logs/index/startup.log &'
             }
         }
     }
