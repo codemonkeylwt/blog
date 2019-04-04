@@ -12,18 +12,28 @@ pipeline {
             }
         }
 
-        stage('Build'){
-            steps {
-                sh 'mvn clean package -Dmaven.test.skip=true'
-                sh 'cd /data/jenkins/workspace/blog/'
-                sh 'chmod 777 shell/*'
-                sh './shell/copy_jars.sh'
-            }
-        }
-
-        stage('Analysis'){
-            steps {
-                sh 'mvn --batch-mode -V -U -e spotbugs:spotbugs'
+        stage('Build') {
+            failFast true
+            parallel {
+                stage('Package'){
+                    agent {
+                        label: 'Package'
+                    }
+                    steps {
+                        sh 'mvn clean package -Dmaven.test.skip=true'
+                        sh 'cd /data/jenkins/workspace/blog/'
+                        sh 'chmod 777 shell/*'
+                        sh './shell/copy_jars.sh'
+                    }
+                }
+                stage('Analysis'){
+                    agent {
+                        label: 'Analysis'
+                    }
+                    steps {
+                        sh 'mvn --batch-mode -V -U -e spotbugs:spotbugs'
+                    }
+                }
             }
         }
 
