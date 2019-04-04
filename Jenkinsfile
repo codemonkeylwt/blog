@@ -26,6 +26,11 @@ pipeline {
                 stage('Analysis'){
                     steps {
                         sh 'mvn --batch-mode -V -U -e spotbugs:spotbugs'
+                        def spotbugs = scanForIssues tool: spotBugs(pattern: '**/target/findbugsXml.xml')
+                        publishIssues issues: [spotbugs]
+                        publishIssues id: 'Analysis', name: 'All Issues',
+                            issues: [spotbugs],
+                            filters: [includePackage('io.jenkins.plugins.analysis.*')]
                     }
                 }
             }
