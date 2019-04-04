@@ -13,20 +13,16 @@ pipeline {
 
         stage('Build'){
             steps {
-                script{
-                    sh label: 'Install', script: 'mvn clean install -Dmaven.test.skip=true'
-                    sh label: '', script: 'cd /data/jenkins/workspace/blog/'
-                    sh label: '', script: 'chmod 777 shell/*'
-                    sh label: 'CopyJars', script: './shell/copy_jars.sh'
-                }
+                sh 'mvn clean install -Dmaven.test.skip=true'
+                sh 'cd /data/jenkins/workspace/blog/'
+                sh 'chmod 777 shell/*'
+                sh './shell/copy_jars.sh'
             }
         }
 
         stage('Analysis'){
             steps {
-                script{
-                    sh label: 'FindBugs', script: 'mvn --batch-mode -V -U -e findbugs:findbugs spotbugs:spotbugs'
-                }
+                sh 'mvn --batch-mode -V -U -e findbugs:findbugs spotbugs:spotbugs'
             }
         }
 
@@ -38,9 +34,7 @@ pipeline {
 
         stage('Run'){
             steps {
-                script{
-                    sh label: 'Start Services', script: 'JENKINS_NODE_COOKIE=dontKillMe nohup java -jar /opt/blog/app/blog-index.jar > /opt/blog/logs/index/startup.log &'
-                }
+                sh 'JENKINS_NODE_COOKIE=dontKillMe nohup java -jar /opt/blog/app/blog-index.jar > /opt/blog/logs/index/startup.log &'
             }
         }
 
