@@ -48,10 +48,7 @@ pipeline {
             steps {
                 script{
                     try {
-                        withMaven(
-                            maven: 'maven') {
-                                sh label: '', script: 'mvna clean install -Dmaven.test.skip=true'
-                            }
+                        sh label: '', script: 'mvna clean install -Dmaven.test.skip=true'
                         sh label: '', script: 'cd /data/jenkins/workspace/blog/'
                         sh label: '', script: 'chmod 777 shell/*'
                         sh label: '', script: './shell/copy_jars.sh'
