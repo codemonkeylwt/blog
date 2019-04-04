@@ -3,6 +3,7 @@ pipeline {
     agent any
 
     stages {
+
         stage('Checkout') {
             steps {
                 script{
@@ -13,7 +14,7 @@ pipeline {
 
         stage('Build'){
             steps {
-                sh 'mvn clean install -Dmaven.test.skip=true'
+                sh 'mvn clean package -Dmaven.test.skip=true'
                 sh 'cd /data/jenkins/workspace/blog/'
                 sh 'chmod 777 shell/*'
                 sh './shell/copy_jars.sh'
@@ -47,7 +48,8 @@ pipeline {
         failure {
             mail to: 'nbliuwentao@gmail.com',
                 subject: "Failed Pipeline: ${currentBuild.fullDisplayName}",
-                body: "<html><body><p>Something is wrong with ${env.BUILD_URL}</p><p>Failure: Job '${env.JOB_NAME} [${env.BUILD_NUMBER}]'</p><p>项目名称 ：${env.JOB_NAME}</p><p>项目更新进度：${env.BUILD_NUMBER}</p></body><html>"
+                body: "Something is wrong with ${env.BUILD_URL}"
         }
     }
+
 }
