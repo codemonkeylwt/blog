@@ -26,9 +26,7 @@ pipeline {
                 stage('Analysis'){
                     steps {
                         sh 'mvn --batch-mode -V -U -e spotbugs:spotbugs'
-                        publishIssues issues: scanForIssues tool: spotBugs(pattern: '**/target/spotbugsXml.xml')
-                        publishIssues id: 'Analysis', name: 'All Issues',
-                            issues: [spotbugs]
+                        recordIssues enabledForFailure: true, tool: spotBugs()
                     }
                 }
             }
