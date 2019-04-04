@@ -22,7 +22,7 @@ pipeline {
 
         stage('Analysis'){
             steps {
-                sh 'mvn --batch-mode -V -U -e findbugs:findbugs spotbugs:spotbugs'
+                sh 'mvn --batch-mode -V -U -e spotbugs:spotbugs'
             }
         }
 
