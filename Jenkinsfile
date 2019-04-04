@@ -16,9 +16,6 @@ pipeline {
             failFast true
             parallel {
                 stage('Package'){
-                    agent {
-                        label: 'Package'
-                    }
                     steps {
                         sh 'mvn clean package -Dmaven.test.skip=true'
                         sh 'cd /data/jenkins/workspace/blog/'
@@ -27,9 +24,6 @@ pipeline {
                     }
                 }
                 stage('Analysis'){
-                    agent {
-                        label: 'Analysis'
-                    }
                     steps {
                         sh 'mvn --batch-mode -V -U -e spotbugs:spotbugs'
                     }
