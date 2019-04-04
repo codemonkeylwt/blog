@@ -43,11 +43,6 @@
             <artifactId>spring-boot-starter-test</artifactId>
             <scope>test</scope>
         </dependency>
-        <dependency>
-            <groupId>com.github.spotbugs</groupId>
-            <artifactId>spotbugs</artifactId>
-            <version>4.0.0-beta1</version>
-        </dependency>
     </dependencies>
 
     <build>
@@ -55,36 +50,6 @@
             <plugin>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
-            </plugin>
-            <plugin>
-                <groupId>com.github.spotbugs</groupId>
-                <artifactId>spotbugs-maven-plugin</artifactId>
-                <version>3.1.11</version>
-                <dependencies>
-                    <!-- overwrite dependency on spotbugs if you want to specify the version of spotbugs -->
-                    <dependency>
-                        <groupId>com.github.spotbugs</groupId>
-                        <artifactId>spotbugs</artifactId>
-                        <version>4.0.0-beta1</version>
-                    </dependency>
-                </dependencies>
-            </plugin>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-checkstyle-plugin</artifactId>
-                <version>2.10</version>
-                <configuration>
-                    <configLocation>checkstyle-result.xml</configLocation>
-                </configuration>
-                <executions>
-                    <execution>
-                        <id>checkstyle</id>
-                        <phase>validate</phase>
-                        <configuration>
-                            <failOnViolation>true</failOnViolation>
-                        </configuration>
-                    </execution>
-                </executions>
             </plugin>
         </plugins>
     </build>
