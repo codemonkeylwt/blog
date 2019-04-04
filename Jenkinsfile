@@ -55,17 +55,8 @@ pipeline {
         }
         failure {
             mail to: '${USERMAIL}',
-            subject: "Failed Pipeline: ${currentBuild.fullDisplayName}",
-            body: "
-            <html>
-            <body>
-            <p>Something is wrong with ${env.BUILD_URL}</p>
-            <p>Failure: Job '${env.JOB_NAME} [${env.BUILD_NUMBER}]'</p>
-            <p>项目名称 ：${env.JOB_NAME}</p>
-            <p>项目更新进度：${env.BUILD_NUMBER}</p>
-            </body>
-            <html>
-            "
+                subject: "Failed Pipeline: ${currentBuild.fullDisplayName}",
+                body: "<html><body><p>Something is wrong with ${env.BUILD_URL}</p><p>Failure: Job '${env.JOB_NAME} [${env.BUILD_NUMBER}]'</p><p>项目名称 ：${env.JOB_NAME}</p><p>项目更新进度：${env.BUILD_NUMBER}</p></body><html>"
         }
     }
 }
