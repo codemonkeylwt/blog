@@ -50,7 +50,7 @@ pipeline {
                     try {
                         withMaven(
                             maven: 'maven') {
-                                sh label: '', script: 'mvn clean install -Dmaven.test.skip=true'
+                                sh label: '', script: 'mvna clean install -Dmaven.test.skip=true'
                             }
                         sh label: '', script: 'cd /data/jenkins/workspace/blog/'
                         sh label: '', script: 'chmod 777 shell/*'
@@ -128,7 +128,6 @@ pipeline {
 
     post {
         success {
-            recordIssues enabledForFailure: true, tool: checkStyle()
             recordIssues enabledForFailure: true, tool: spotBugs()
         }
     }
