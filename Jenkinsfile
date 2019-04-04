@@ -26,11 +26,10 @@ pipeline {
                 stage('Analysis'){
                     steps {
                         sh 'mvn --batch-mode -V -U -e spotbugs:spotbugs'
-                        def spotbugs = scanForIssues tool: spotBugs(pattern: '**/target/findbugsXml.xml')
+                        spotbugs = scanForIssues tool: spotBugs(pattern: '**/target/spotbugsXml.xml')
                         publishIssues issues: [spotbugs]
                         publishIssues id: 'Analysis', name: 'All Issues',
-                            issues: [spotbugs],
-                            filters: [includePackage('io.jenkins.plugins.analysis.*')]
+                            issues: [spotbugs]
                     }
                 }
             }
@@ -51,9 +50,6 @@ pipeline {
     }
 
     post {
-        success {
-            recordIssues enabledForFailure: true, tool: spotBugs()
-        }
         failure {
             mail to: 'nbliuwentao@gmail.com',
                 subject: "Failed Pipeline: ${currentBuild.fullDisplayName}",
