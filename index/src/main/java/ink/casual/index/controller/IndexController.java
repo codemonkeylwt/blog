@@ -14,6 +14,7 @@ public class IndexController {
 
     @GetMapping("/")
     public Mono<String> index(final Model model){
+        int a = 1/0;
         model.addAttribute("name","lwt");
         return Mono.create(x->x.success("index"));
     }

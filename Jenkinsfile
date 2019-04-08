@@ -5,6 +5,7 @@ pipeline {
     stages {
 
         stage('Checkout') {
+            deleteDir()
             steps {
                 script{
                     git credentialsId: '81a30c1f-8e72-4bfa-a5d6-fa7dfb2e1abf', url: 'git@github.com:codemonkeylwt/blog.git'
