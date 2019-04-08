@@ -6,7 +6,6 @@ pipeline {
 
         stage('Checkout') {
             steps {
-                deleteDir()
                 script{
                     git credentialsId: '81a30c1f-8e72-4bfa-a5d6-fa7dfb2e1abf', url: 'git@github.com:codemonkeylwt/blog.git'
                 }
@@ -14,22 +13,18 @@ pipeline {
         }
 
         stage('Build') {
-            failFast true
-            parallel {
-                stage('Package'){
-                    steps {
-                        sh 'mvn clean package -Dmaven.test.skip=true'
-                        sh 'cd /data/jenkins/workspace/blog/'
-                        sh 'chmod 777 shell/*'
-                        sh './shell/copy_jars.sh'
-                    }
-                }
-                stage('Analysis'){
-                    steps {
-                        sh 'mvn --batch-mode -V -U -e spotbugs:spotbugs'
-                        recordIssues enabledForFailure: true, tool: spotBugs()
-                    }
-                }
+            steps {
+                sh 'mvn clean package -Dmaven.test.skip=true'
+                sh 'cd /data/jenkins/workspace/blog/'
+                sh 'chmod 777 shell/*'
+                sh './shell/copy_jars.sh'
+            }
+        }
+
+        stage('Analysis'){
+            steps {
+                sh 'mvn --batch-mode -V -U -e spotbugs:spotbugs'
+                recordIssues enabledForFailure: true, tool: spotBugs()
             }
         }
 
