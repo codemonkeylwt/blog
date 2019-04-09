@@ -1,0 +1,29 @@
+spring:
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://my-linux:3306/blog?useUnicode=true&characterEncoding=utf8&allowMultiQueries=true
+    username: root
+    password: 123456
+  rabbitmq:
+    password: guest
+    port: 5672
+    host: my-linux
+    username: guest
+  redis:
+    database: 0
+    port: 6379
+    host: my-linux
+    lettuce:
+      pool:
+        max-idle: 8
+        min-idle: 3
+        max-active: 8
+        max-wait: -1s
+    timeout: 5000s
+  data:
+    mongodb:
+      database: blog
+      port: 27017
+      host: my-linux
+      username: lwt
+      password: 123456

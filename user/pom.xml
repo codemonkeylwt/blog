@@ -9,22 +9,7 @@
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
-    <artifactId>index</artifactId>
-
-    <properties>
-        <java.version>11</java.version>
-        <maven.compiler.source>11</maven.compiler.source>
-        <maven.compiler.target>11</maven.compiler.target>
-    </properties>
-
-    <dependencies>
-        <dependency>
-            <groupId>com.sun.mail</groupId>
-            <artifactId>javax.mail</artifactId>
-            <version>1.6.2</version>
-        </dependency>
-    </dependencies>
-
+    <artifactId>user</artifactId>
     <build>
         <plugins>
             <plugin>
@@ -36,7 +21,7 @@
                 <artifactId>maven-compiler-plugin</artifactId>
             </plugin>
         </plugins>
-        <finalName>blog-index</finalName>
+        <finalName>blog-user</finalName>
         <resources>
             <resource>
                 <directory>src/main/resources</directory>
@@ -88,5 +73,6 @@
             </properties>
         </profile>
     </profiles>
+
 
 </project>
