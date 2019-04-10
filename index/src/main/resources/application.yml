@@ -1,4 +1,6 @@
 spring:
+  application:
+    name: blog-index
   profiles:
     active: @profileActive@
   thymeleaf:
@@ -9,9 +11,5 @@ spring:
     servlet:
       content-type: text/html
     mode: HTML
-devtools:
-  livereload:
-    enabled: true
-    port: 35729
 server:
   port: 81

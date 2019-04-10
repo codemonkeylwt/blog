@@ -1,0 +1,7 @@
+spring:
+  application:
+    name: blog-user
+  profiles:
+    active: @profileActive@
+server:
+  port: 82

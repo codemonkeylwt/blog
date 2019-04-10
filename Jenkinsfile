@@ -14,7 +14,7 @@ pipeline {
 
         stage('Build') {
             steps {
-                sh 'mvn clean package -Dmaven.test.skip=true'
+                sh 'mvn clean package -Dmaven.test.skip=true -P prod'
                 sh 'cd /data/jenkins/workspace/blog/'
                 sh 'chmod 777 shell/*'
                 sh './shell/copy_jars.sh'
