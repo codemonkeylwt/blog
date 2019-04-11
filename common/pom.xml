@@ -10,6 +10,10 @@
     <modelVersion>4.0.0</modelVersion>
 
     <artifactId>common</artifactId>
+    <version>1.0.20190411-SNAPSHOT</version>
+    <properties>
+        <file>target/blog-common.jar</file>
+    </properties>
 
     <build>
         <finalName>blog-common</finalName>

@@ -27,6 +27,8 @@
         <maven.compiler.target>11</maven.compiler.target>
         <spring-cloud.version>Greenwich.RELEASE</spring-cloud.version>
         <spring-cloud-alibaba.version>0.2.1.RELEASE</spring-cloud-alibaba.version>
+        <common-provider.version>1.0.20190411-SNAPSHOT</common-provider.version>
+        <user-provider.version>1.0.201904111-SNAPSHOT</user-provider.version>
     </properties>
 
     <dependencyManagement>
@@ -44,6 +46,16 @@
                 <version>${spring-cloud.version}</version>
                 <type>pom</type>
                 <scope>import</scope>
+            </dependency>
+            <dependency>
+                <groupId>ink.casual</groupId>
+                <artifactId>user-provider</artifactId>
+                <version>${user-provider.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>ink.casual</groupId>
+                <artifactId>common-provider</artifactId>
+                <version>${common-provider.version}</version>
             </dependency>
         </dependencies>
     </dependencyManagement>
@@ -112,18 +124,73 @@
             <artifactId>spring-cloud-starter-alibaba-nacos-discovery</artifactId>
             <version>0.2.1.RELEASE</version>
         </dependency>
-    </dependencies>
 
-    <repositories>
-        <repository>
-            <id>aliyun</id>
-            <name>aliyun</name>
-            <url>http://maven.aliyun.com/nexus/content/groups/public/</url>
-        </repository>
-    </repositories>
+    </dependencies>
 
     <build>
         <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-install-plugin</artifactId>
+                <executions>
+                    <execution>
+                        <id>default-install</id>
+                        <phase>install</phase>
+                        <goals>
+                            <goal>install</goal>
+                        </goals>
+                        <configuration>
+                            <skip>true</skip>
+                        </configuration>
+                    </execution>
+                    <execution>
+                        <id>install-find-repo</id>
+                        <goals>
+                            <goal>install-file</goal>
+                        </goals>
+                        <phase>install</phase>
+                        <configuration>
+                            <groupId>${project.groupId}</groupId>
+                            <artifactId>${project.artifactId}-provider</artifactId>
+                            <version>${project.version}</version>
+                            <packaging>jar</packaging>
+                            <file>${file}</file>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+            <plugin>
+                <artifactId>maven-deploy-plugin</artifactId>
+                <version>2.7</version>
+                <executions>
+                    <execution>
+                        <id>default-deploy</id>
+                        <phase>deploy</phase>
+                        <goals>
+                            <goal>deploy</goal>
+                        </goals>
+                        <!-- skip默认deploy插件的执行 -->
+                        <configuration>
+                            <skip>true</skip>
+                        </configuration>
+                    </execution>
+                    <execution>
+                        <id>deploy-file</id>
+                        <phase>deploy</phase>
+                        <goals>
+                            <goal>deploy-file</goal>
+                        </goals>
+                        <configuration>
+                            <repositoryId>${project.distributionManagement.snapshotRepository.id}</repositoryId>
+                            <url>${project.distributionManagement.snapshotRepository.url}</url>
+                            <file>${file}</file>
+                            <groupId>${project.groupId}</groupId>
+                            <artifactId>${project.artifactId}-provider</artifactId>
+                            <version>${project.version}</version>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
             <plugin>
                 <groupId>com.github.spotbugs</groupId>
                 <artifactId>spotbugs-maven-plugin</artifactId>
@@ -138,6 +205,15 @@
             </plugin>
         </plugins>
     </build>
-
+    <distributionManagement>
+        <repository>
+            <id>rdc-releases</id>
+            <url>https://repo.rdc.aliyun.com/repository/69746-release-ZCp7DY/</url>
+        </repository>
+        <snapshotRepository>
+            <id>rdc-snapshots</id>
+            <url>https://repo.rdc.aliyun.com/repository/69746-snapshot-OnLw1g/</url>
+        </snapshotRepository>
+    </distributionManagement>
 
 </project>

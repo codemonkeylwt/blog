@@ -10,6 +10,15 @@
     <modelVersion>4.0.0</modelVersion>
 
     <artifactId>user</artifactId>
+    <version>1.0.201904111-SNAPSHOT</version>
+    <properties>
+            <file>target/blog-user-provider.jar</file>
+    </properties>
+
+    <dependencies>
+
+    </dependencies>
+
     <build>
         <plugins>
             <plugin>
@@ -92,9 +101,5 @@
             </properties>
         </profile>
     </profiles>
-    <dependencies>
-
-    </dependencies>
-
 
 </project>
