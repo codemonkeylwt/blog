@@ -27,8 +27,8 @@
         <maven.compiler.target>11</maven.compiler.target>
         <spring-cloud.version>Greenwich.RELEASE</spring-cloud.version>
         <spring-cloud-alibaba.version>0.2.1.RELEASE</spring-cloud-alibaba.version>
-        <common-provider.version>1.0.20190411-SNAPSHOT</common-provider.version>
-        <user-provider.version>1.0.201904111-SNAPSHOT</user-provider.version>
+        <common-provider.version>1.0.20190415-SNAPSHOT</common-provider.version>
+        <user-provider.version>1.0.20190412-SNAPSHOT</user-provider.version>
     </properties>
 
     <dependencyManagement>
@@ -124,7 +124,11 @@
             <artifactId>spring-cloud-starter-alibaba-nacos-discovery</artifactId>
             <version>0.2.1.RELEASE</version>
         </dependency>
-
+        <dependency>
+            <groupId>tk.mybatis</groupId>
+            <artifactId>mapper-spring-boot-starter</artifactId>
+            <version>2.1.5</version>
+        </dependency>
     </dependencies>
 
     <build>

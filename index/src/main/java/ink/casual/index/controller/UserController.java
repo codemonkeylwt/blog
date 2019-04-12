@@ -1,5 +1,6 @@
 package ink.casual.index.controller;
 
+import ink.casual.user.common.model.Account;
 import ink.casual.user.common.provider.UserControllerProvider;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -17,9 +18,9 @@ public class UserController {
     @Autowired
     private UserControllerProvider userControllerProvider;
 
-    @PostMapping(value = "/{string}")
-    public String register(String test){
-        return userControllerProvider.test(test);
+    @PostMapping
+    public Account register(Account account){
+        return userControllerProvider.register(account);
     }
 
 }

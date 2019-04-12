@@ -1,7 +1,9 @@
 package ink.casual.user.controller;
 
+import ink.casual.user.common.model.Account;
 import ink.casual.user.common.provider.UserControllerProvider;
-import org.springframework.web.bind.annotation.PathVariable;
+import ink.casual.user.service.AccountService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -14,10 +16,13 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping(value = "/user")
 public class UserController implements UserControllerProvider {
 
+    @Autowired
+    private AccountService accountService;
+
     @Override
-    @PostMapping(value = "/{string}")
-    public String test(@PathVariable("string") String string){
-        return "OK:".concat(string);
+    @PostMapping
+    public Account register(Account account){
+        return accountService.register(account);
     }
 
 }

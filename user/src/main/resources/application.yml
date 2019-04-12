@@ -5,3 +5,5 @@ spring:
     active: @profileActive@
 server:
   port: 82
+mapper:
+  mappers: ink.casual.user.mybatis.BaseMapper

@@ -18,15 +18,13 @@ spring:
     username: guest
   redis:
     database: 0
-    port: 6379
+    port: 9736
     host: casual.ink
     lettuce:
       pool:
         max-idle: 8
         min-idle: 3
         max-active: 8
-        max-wait: -1s
-    timeout: 5000s
   data:
     mongodb:
       database: blog
