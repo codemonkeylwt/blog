@@ -1,6 +1,7 @@
 package ink.casual.user.service.impl;
 
 import ink.casual.common.model.PreFixEnum;
+import ink.casual.common.util.RSAUtil;
 import ink.casual.common.util.SnowflakeIdWorker;
 import ink.casual.user.common.model.Account;
 import ink.casual.user.mapper.AccountMapper;
@@ -24,6 +25,7 @@ public class AccountServiceImpl implements AccountService {
     @Override
     public Account register(Account account) {
         account.setAccountId(PreFixEnum.ACCOUNT_ID.getPreFix() + snowflakeIdWorker.nextId());
+        new String(RSAUtil.decryptByPrivateKey(account.getPassword(),""));
         accountMapper.insert(account);
         account.setPassword(null);
         account.setRegisterDate(null);

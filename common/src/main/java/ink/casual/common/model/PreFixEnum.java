@@ -16,7 +16,7 @@ public enum PreFixEnum {
      * 邮件key前缀
      *
      */
-    ACCOUNT_ID("A"),SMS("SMS_"),EMAIL("EMAIL_");
+    ACCOUNT_ID("A"),SMS("SMS_"),EMAIL("EMAIL_"),PIC("PIC_");
 
     private String preFix;
 

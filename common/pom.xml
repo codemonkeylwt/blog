@@ -10,7 +10,7 @@
     <modelVersion>4.0.0</modelVersion>
 
     <artifactId>common</artifactId>
-    <version>1.0.20190415-SNAPSHOT</version>
+    <version>1.0.201904131-SNAPSHOT</version>
     <properties>
         <file>target/blog-common.jar</file>
     </properties>
