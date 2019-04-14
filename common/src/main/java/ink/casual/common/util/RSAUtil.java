@@ -19,9 +19,9 @@ public class RSAUtil {
 
     public static final String SIGNATURE_ALGORITHM = "MD5withRSA";
 
-    private static final String PUBLIC_KEY = "RSAPublicKey";
+    public static final String PUBLIC_KEY = "RSAPublicKey";
 
-    private static final String PRIVATE_KEY = "RSAPrivateKey";
+    public static final String PRIVATE_KEY = "RSAPrivateKey";
 
     public static byte[] decryptBASE64(String key) {
         return Base64.decodeBase64(key);

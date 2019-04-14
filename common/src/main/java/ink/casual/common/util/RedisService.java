@@ -1,30 +1,36 @@
 package ink.casual.common.util;
 
 import com.alibaba.fastjson.JSONObject;
-import org.springframework.beans.factory.annotation.Autowired;
+import ink.casual.common.mapper.SysConfMapper;
+import ink.casual.common.model.SysConf;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Service;
 
 import java.time.Duration;
 import java.util.Arrays;
+import java.util.List;
 
 /**
  * @author lwt
  * @date 2019/4/13 17:16
  */
 @Service
-public class RedisService {
+public class RedisService extends RedisTemplate{
 
-    @Autowired
-    private RedisTemplate<String,String> redisTemplate;
+    private final RedisTemplate<String,String> redisTemplate;
+    private final SysConfMapper sysConfMapper;
+
+    public RedisService(RedisTemplate<String, String> redisTemplate, SysConfMapper sysConfMapper) {
+        this.redisTemplate = redisTemplate;
+        this.sysConfMapper = sysConfMapper;
+    }
 
     /**
      * 存值
-     * 过期时间默认5分钟
      *
      */
     public void set(String key,Object value){
-        redisTemplate.opsForValue().set(key,JSONObject.toJSONString(value),Duration.ofMinutes(5));
+        redisTemplate.opsForValue().set(key,JSONObject.toJSONString(value));
     }
 
     /**
@@ -62,13 +68,13 @@ public class RedisService {
     public String getSysValue(String key){
         String value = get(key);
         if(value == null){
-            /*
-             * TODO
-             * 2019/4/13
-             * lwt
-             * 从数据库读取系统参数
-             */
-            return null;
+            SysConf sysConf = sysConfMapper.queryConfByKey(key);
+            if (sysConf != null){
+                set(key,sysConf.getValue());
+                return sysConf.getValue();
+            }else {
+                return null;
+            }
         }else {
             return value;
         }
@@ -81,13 +87,13 @@ public class RedisService {
     public <T>T getSysValue(String key,Class<T> tClass){
         T t = get(key, tClass);
         if (t == null){
-            /*
-             * TODO
-             * 2019/4/13
-             * lwt
-             * 从数据库读取系统参数
-             */
-            return null;
+            SysConf sysConf = sysConfMapper.queryConfByKey(key);
+            if (sysConf != null){
+                set(key,sysConf.getValue());
+                return JSONObject.parseObject(sysConf.getValue(),tClass);
+            }else {
+                return null;
+            }
         }else {
             return t;
         }
@@ -98,7 +104,18 @@ public class RedisService {
      *
      */
     public void setSysValue(String key,Object value){
-        redisTemplate.opsForValue().set(key, JSONObject.toJSONString(value));
+        set(key,value);
+    }
+
+    /**
+     * 重置系统参数
+     *
+     */
+    public void reSetSysConf(){
+        List<SysConf> sysConfs = sysConfMapper.queryAllConf();
+        for (SysConf sysConf : sysConfs) {
+            set(sysConf.getKey(),sysConf.getValue());
+        }
     }
 
     /**
@@ -111,6 +128,27 @@ public class RedisService {
         }else {
             redisTemplate.delete(Arrays.asList(key));
         }
+    }
+
+    /**
+     * 锁定key，锁定成功返回true
+     *
+     */
+    public Boolean lock(String key,Duration duration){
+        if (redisTemplate.hasKey(key)){
+            return false;
+        }else {
+            set(key,"locking",duration);
+            return true;
+        }
+    }
+
+    /**
+     * 解锁key
+     *
+     */
+    public void unlock(String key){
+        deleteKey(key);
     }
 
 }

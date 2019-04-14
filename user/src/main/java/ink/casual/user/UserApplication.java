@@ -12,7 +12,7 @@ import org.springframework.web.reactive.config.EnableWebFlux;
  * @date 2019/4/10 9:06
  */
 @EnableDiscoveryClient
-@SpringBootApplication
+@SpringBootApplication(scanBasePackages = {"ink.casual.*"})
 @EnableWebFlux
 public class UserApplication {
 

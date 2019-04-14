@@ -7,5 +7,8 @@ import ink.casual.user.common.model.Account;
  * @date 2019/4/12 17:41
  */
 public interface AccountService {
+
     Account register(Account account);
+
+    Account login(Account account);
 }

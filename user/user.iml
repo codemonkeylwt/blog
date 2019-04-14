@@ -16,7 +16,7 @@
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
-    <orderEntry type="library" name="Maven: ink.casual:common-provider:1.0.201904131-SNAPSHOT" level="project" />
+    <orderEntry type="library" name="Maven: ink.casual:common-provider:1.0.201904142-SNAPSHOT" level="project" />
     <orderEntry type="library" name="Maven: cn.apiclub.tool:simplecaptcha:1.2.2" level="project" />
     <orderEntry type="library" name="Maven: org.springframework.cloud:spring-cloud-starter-feign:1.4.6.RELEASE" level="project" />
     <orderEntry type="library" name="Maven: org.springframework.cloud:spring-cloud-starter-openfeign:2.1.0.RELEASE" level="project" />
