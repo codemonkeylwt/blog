@@ -1,0 +1,2 @@
+hystrix=com.cash.front.hystrix.DubboHystrixFilter
+dubboExceptionFilter=com.cash.common.exception.DubboExceptionFilter

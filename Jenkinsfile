@@ -36,6 +36,7 @@ pipeline {
 
         stage('Run'){
             steps {
+                sh 'JENKINS_NODE_COOKIE=dontKillMe nohup java -jar /opt/blog/app/blog-user.jar > /opt/blog/logs/user/startup.log &'
                 sh 'JENKINS_NODE_COOKIE=dontKillMe nohup java -jar /opt/blog/app/blog-index.jar > /opt/blog/logs/index/startup.log &'
             }
         }

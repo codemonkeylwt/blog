@@ -7,10 +7,11 @@ spring:
     driver-class-name: com.mysql.cj.jdbc.Driver
     type: com.alibaba.druid.pool.DruidDataSource
     url: jdbc:mysql://casual.ink:3306/blog?useUnicode=true&characterEncoding=utf8&allowMultiQueries=true
-    username: root
-    password: WzhmkWSm3Qh/gNHbDo/iXNqI6VWiylJ+NTvsiuMJKpIXhcMjhThxeGSDRANTKOzupPIKdR44N0ec0NCLGBEjsQ==
     druid:
-      connectionProperties: config.decrypt=true
+      username: root
+      password: MMLzV3uM+a1eQK8lRnW8YoQk3Lkq8KIavGMBhbHh7XXQjhhcDU4/ePeJ+lq5jxNZNcqOwR4CzjjEMe/BwkStQg==
+      connect-properties: {config.decrypt: true,config.decrypt.key: MFwwDQYJKoZIhvcNAQEBBQADSwAwSAJBAJQo2CqjYDpFvpWeHIOQqdli5eNG1F2qUpJpKUxFOHQ7Y7TZhlKCv50tYGMmXMiIaupzM6K/PyDiPQ5CMf8DK7kCAwEAAQ==}
+      filters: config
   rabbitmq:
     password: guest
     port: 5672
@@ -32,3 +33,5 @@ spring:
       host: casual.ink
       username: lwt
       password: 123456
+logging:
+  path: E:/logs/blog-index

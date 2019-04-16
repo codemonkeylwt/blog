@@ -28,9 +28,9 @@ public class Account {
     @Column(name = "password")
     private String password;
     @Column(name = "email_status")
-    private boolean emailStatus;
+    private Boolean emailStatus;
     @Column(name = "account_status")
-    private boolean accountStatus;
+    private Boolean accountStatus;
     @Column(name = "register_date")
     private Date registerDate;
     @Column(name = "lcd")

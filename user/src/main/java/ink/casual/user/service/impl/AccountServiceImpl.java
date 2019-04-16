@@ -43,8 +43,9 @@ public class AccountServiceImpl implements AccountService {
 
     @Override
     public Account login(Account account) {
+        account.setPassword(getMD5Password(account.getPassword()));
         Account account1 = accountMapper.selectOne(account);
-        if(AccountUtil.verifyPassword(getMD5Password(account.getPassword()), account1.getPassword())){
+        if(account1 != null){
             account1.setPassword(null);
             AccountUtil.checkInLogin(account1);
             return account1;
@@ -54,7 +55,7 @@ public class AccountServiceImpl implements AccountService {
     }
 
     private String getMD5Password(String password){
-        return Md5Utils.getMD5(RSAUtil.decryptByPrivateKey(password, redisService.getSysValue(RSAUtil.PUBLIC_KEY)));
+        return Md5Utils.getMD5(RSAUtil.decryptByPrivateKey(password, redisService.getSysValue(RSAUtil.PRIVATE_KEY)));
     }
 
 }

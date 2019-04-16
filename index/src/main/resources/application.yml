@@ -3,6 +3,7 @@ spring:
     name: blog-index
   profiles:
     active: @profileActive@
+    include: common
   thymeleaf:
     cache: false
     prefix: classpath:/static/templates/
@@ -13,3 +14,7 @@ spring:
     mode: HTML
 server:
   port: 81
+logging:
+  level: {ink.casual.common.mapper: debug}
+  file:
+    max-history: 7

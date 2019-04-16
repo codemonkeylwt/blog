@@ -18,4 +18,6 @@ public interface UserControllerProvider {
     @PostMapping
     Account register(Account account);
 
+    @PostMapping("/login")
+    Account login(Account account);
 }

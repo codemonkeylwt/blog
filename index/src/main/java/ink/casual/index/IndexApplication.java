@@ -5,6 +5,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
 import org.springframework.cloud.openfeign.EnableFeignClients;
 import org.springframework.web.reactive.config.EnableWebFlux;
+import tk.mybatis.spring.annotation.MapperScan;
 
 /**
  * @author lwt
@@ -14,6 +15,7 @@ import org.springframework.web.reactive.config.EnableWebFlux;
 @EnableWebFlux
 @EnableFeignClients(basePackages = {"ink.casual.*.common.provider"})
 @EnableDiscoveryClient
+@MapperScan(basePackages = {"ink.casual.common.mapper"})
 public class IndexApplication {
 
     public static void main(String[] args) {

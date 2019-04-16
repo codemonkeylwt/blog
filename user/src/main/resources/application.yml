@@ -3,7 +3,12 @@ spring:
     name: blog-user
   profiles:
     active: @profileActive@
+    include: common
 server:
   port: 82
 mapper:
   mappers: ink.casual.user.mybatis.BaseMapper
+logging:
+  level: {ink.casual.user.mapper: debug,ink.casual.common.mapper: debug}
+  file:
+    max-history: 7

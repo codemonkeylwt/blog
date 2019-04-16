@@ -6,6 +6,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
 import org.springframework.context.annotation.Bean;
 import org.springframework.web.reactive.config.EnableWebFlux;
+import tk.mybatis.spring.annotation.MapperScan;
 
 /**
  * @author lwt
@@ -14,6 +15,7 @@ import org.springframework.web.reactive.config.EnableWebFlux;
 @EnableDiscoveryClient
 @SpringBootApplication(scanBasePackages = {"ink.casual.*"})
 @EnableWebFlux
+@MapperScan(basePackages = {"ink.casual.user.mapper","ink.casual.common.mapper"})
 public class UserApplication {
 
     public static void main(String[] args) {

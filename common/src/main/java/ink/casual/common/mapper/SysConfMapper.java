@@ -12,10 +12,10 @@ import java.util.List;
  */
 public interface SysConfMapper {
 
-    @Select("select * from sys_conf where enable = 1")
+    @Select("select * from sys_conf where `enable` = 1")
     List<SysConf> queryAllConf();
 
-    @Select("select * from sys_conf where enable = 1 and key = #{key}")
+    @Select("select * from sys_conf where `enable` = 1 and `key` = #{key}")
     SysConf queryConfByKey(String key);
 
     @Insert("INSERT INTO sys_conf(`key`, `value`, `description`,`enable`) VALUES (#{key}, #{value}, #{description},1) " +

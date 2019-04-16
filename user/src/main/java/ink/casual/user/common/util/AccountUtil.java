@@ -13,6 +13,10 @@ public class AccountUtil {
 
     private static RedisService redisService;
 
+    public static void setRedisService(RedisService redisService) {
+        AccountUtil.redisService = redisService;
+    }
+
     public static boolean isLogin(String accountId){
         return redisService.hasKey(accountId);
     }

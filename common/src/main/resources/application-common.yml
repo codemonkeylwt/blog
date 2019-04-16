@@ -1,0 +1,9 @@
+# json返回格式设置
+spring:
+  jackson:
+    default-property-inclusion: non_null
+    date-format: yyyy-MM-dd
+    mapper: {SORT_PROPERTIES_ALPHABETICALLY: true}
+#dubbo:
+#  provider:
+#    filter: dubboExceptionFilter,-exception

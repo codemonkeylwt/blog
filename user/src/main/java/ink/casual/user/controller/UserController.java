@@ -25,4 +25,10 @@ public class UserController implements UserControllerProvider {
         return accountService.register(account);
     }
 
+    @Override
+    @PostMapping("/login")
+    public Account login(Account account){
+        return accountService.login(account);
+    }
+
 }
