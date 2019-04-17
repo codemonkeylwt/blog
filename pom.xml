@@ -63,6 +63,12 @@
 
     <dependencies>
         <dependency>
+            <groupId>com.google.guava</groupId>
+            <artifactId>guava</artifactId>
+            <version>27.1-jre</version>
+        </dependency>
+
+        <dependency>
             <groupId>cn.apiclub.tool</groupId>
             <artifactId>simplecaptcha</artifactId>
             <version>${simplecaptcha.version}</version>
