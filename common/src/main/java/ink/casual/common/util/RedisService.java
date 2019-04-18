@@ -31,7 +31,11 @@ public class RedisService {
      * 存值
      */
     public void set(String key, Object value) {
-        redisTemplate.opsForValue().set(key, JsonUtil.toJsonString(value));
+        if (value instanceof String){
+            redisTemplate.opsForValue().set(key, (String)value);
+        }else {
+            redisTemplate.opsForValue().set(key, JsonUtil.toJsonString(value));
+        }
     }
 
     /**
@@ -39,7 +43,11 @@ public class RedisService {
      * 可以指定默认时间
      */
     public void set(String key, Object value, Duration exp) {
-        redisTemplate.opsForValue().set(key, JsonUtil.toJsonString(value), exp);
+        if (value instanceof String){
+            redisTemplate.opsForValue().set(key, (String)value,exp);
+        }else {
+            redisTemplate.opsForValue().set(key, JsonUtil.toJsonString(value),exp);
+        }
     }
 
     /**
@@ -63,7 +71,7 @@ public class RedisService {
      * 获得系统参数
      */
     public String getSysValue(String key) {
-        String value = get(key);
+        String value = get(key,String.class);
         if (value == null) {
             SysConf sysConf = sysConfMapper.queryConfByKey(key);
             if (sysConf != null) {

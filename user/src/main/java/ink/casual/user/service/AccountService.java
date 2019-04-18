@@ -8,7 +8,13 @@ import ink.casual.user.common.model.Account;
  */
 public interface AccountService {
 
-    Account register(Account account);
+    Account register(String mobile,String smsCode);
 
-    Account login(Account account);
+    boolean updatePassword(String accountId, String password);
+
+    boolean updateAccountName(String accountId, String accountName);
+
+    boolean updateEmail(String accountId, String email, boolean emailStatus);
+
+    Account login(Account account, String smsCode);
 }

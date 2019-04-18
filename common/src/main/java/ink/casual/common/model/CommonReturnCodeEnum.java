@@ -14,6 +14,7 @@ public enum CommonReturnCodeEnum implements CommonReturnCode {
      *
      *
      */
+    SUCCESS("0", "成功。"),
     SYSTEM_ERROR("1000", "系统错误。");
 
     private String code;

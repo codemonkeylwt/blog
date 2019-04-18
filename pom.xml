@@ -27,8 +27,8 @@
         <maven.compiler.target>11</maven.compiler.target>
         <spring-cloud.version>Greenwich.RELEASE</spring-cloud.version>
         <spring-cloud-alibaba.version>0.2.1.RELEASE</spring-cloud-alibaba.version>
-        <common-provider.version>1.0.201904161-SNAPSHOT</common-provider.version>
-        <user-provider.version>1.0.20190412-SNAPSHOT</user-provider.version>
+        <common-provider.version>1.0.201904183-SNAPSHOT</common-provider.version>
+        <user-provider.version>1.0.201904171-SNAPSHOT</user-provider.version>
         <simplecaptcha.version>1.2.2</simplecaptcha.version>
     </properties>
 

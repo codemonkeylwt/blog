@@ -4,9 +4,7 @@ import ink.casual.user.common.model.Account;
 import ink.casual.user.common.provider.UserControllerProvider;
 import ink.casual.user.service.AccountService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 /**
  * @author lwt
@@ -21,14 +19,14 @@ public class UserController implements UserControllerProvider {
 
     @Override
     @PostMapping
-    public Account register(Account account){
-        return accountService.register(account);
+    public Account register(@RequestParam("mobile") String mobile, @RequestParam("smsCode") String smsCode){
+        return accountService.register(mobile,smsCode);
     }
 
     @Override
     @PostMapping("/login")
-    public Account login(Account account){
-        return accountService.login(account);
+    public Account login(@RequestBody Account account, @RequestParam("smsCode") String smsCode){
+        return accountService.login(account,smsCode);
     }
 
 }

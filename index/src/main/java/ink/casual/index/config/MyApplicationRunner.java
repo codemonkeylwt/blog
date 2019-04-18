@@ -1,8 +1,7 @@
-package ink.casual.user.config;
+package ink.casual.index.config;
 
 import ink.casual.common.util.CaptchaUtils;
 import ink.casual.common.util.RedisService;
-import ink.casual.user.common.util.AccountUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.ApplicationArguments;
@@ -23,7 +22,6 @@ public class MyApplicationRunner implements ApplicationRunner {
 
     @Override
     public void run(ApplicationArguments args) throws Exception {
-        AccountUtil.setRedisService(redisService);
         CaptchaUtils.setRedisService(redisService);
         CaptchaUtils.setPropertiesName(propertiesName);
     }

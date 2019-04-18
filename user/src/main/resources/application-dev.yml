@@ -32,6 +32,7 @@ spring:
       port: 27017
       host: casual.ink
       username: lwt
-      password: 123456
+      password: liuwentao
 logging:
   path: E:/logs/blog-user
+profiles: dev

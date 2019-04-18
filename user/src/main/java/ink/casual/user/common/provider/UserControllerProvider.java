@@ -2,7 +2,10 @@ package ink.casual.user.common.provider;
 
 import ink.casual.user.common.model.Account;
 import org.springframework.cloud.openfeign.FeignClient;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestParam;
 
 /**
  * @author lwt
@@ -16,8 +19,8 @@ public interface UserControllerProvider {
      *
      */
     @PostMapping
-    Account register(Account account);
+    Account register(@RequestParam("smsCode") String mobile, @RequestParam("smsCode") String smsCode);
 
-    @PostMapping("/login")
-    Account login(Account account);
+    @PostMapping("/login/{smsCode}")
+    Account login(@RequestBody Account account, @PathVariable("smsCode") String smsCode);
 }

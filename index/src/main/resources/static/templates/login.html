@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="zh-cn" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+    <title>Casual</title>
+    <link rel="shortcut icon" href="/static/public/favicon.ico" type="image/x-icon" />
+    <link rel="stylesheet" href="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/static/public/login.css">
+    <script src="https://cdn.staticfile.org/jquery/2.1.1/jquery.min.js"></script>
+    <script src="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <script src="https://cdn.bootcss.com/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+    <script>
+        // $(document).ready(function () {
+        //     var es = new EventSource('/one');
+        //     es.onmessage = function(e) {
+        //         var d = JSON.parse(e.data);
+        //         $("#h1").text(d.name);
+        //     };
+        // })
+        $(function () {
+            $("#input2").hide();
+            $("#input3").hide();
+            $("#input4").hide();
+            $("#input5").hide();
+            $("#input1").keyup(function () {
+                var mobile = $("#mobile").val();
+                var reg = /^1[3|4|5|8][0-9]\d{8}$/;
+                if (reg.test(mobile)){
+                    getPicCode(mobile);
+                    $("#mobile").attr('disabled',true);
+                    $("#input2").show();
+                    $("#picCode").focus();
+                }
+            });
+            $("#input2").keyup(function () {
+                var picCode = $("#picCode").val();
+                if (picCode.length == 4){
+                    verifyPicCode($("#mobile").val(),picCode)
+                }
+            });
+            $("#pic").click(function () {
+                var mobile = $("#mobile").val();
+                getPicCode(mobile);
+            });
+            $("#submit").click(function () {
+                var mobile = $("#mobile").val();
+                var smsCode = $("#smsCode").val();
+                verifySmsCode(mobile,smsCode);
+            });
+            $("#btn").click(function () {
+                var mobile = $("#mobile").val();
+                sendSms();
+                getSmsCode(mobile);
+            });
+        });
+
+        function getPicCode(mobile) {
+            $.get("picCode?mobile="+mobile,function (data) {
+                $("#pic").attr("src",data.data)
+            })
+        }
+
+        function verifyPicCode(mobile,picCode) {
+            $.post("picCode?mobile="+mobile+"&picCode="+picCode,function (data) {
+                if (data.code == "0"){
+                    $("#input2").hide();
+                    $("#input3").show();
+                    $("#smsCode").focus();
+                    getSmsCode(mobile);
+                    sendSms();
+                    $("#input4").show();
+                    $("#input5").show();
+                }else {
+                    alert(data.msg);
+                }
+            })
+        }
+
+        function getSmsCode(mobile) {
+            $.get("smsCode?mobile="+mobile);
+        }
+
+        function verifySmsCode(mobile,smsCode) {
+            $.post("smsCode?mobile="+mobile+"&smsCode="+smsCode,function (data) {
+                if (data.code == "0"){
+                    alert(data.code);
+                }else {
+                    alert(data.msg);
+                }
+            })
+        }
+
+        var countdown=60;
+        function sendSms(){
+            var obj = $("#btn");
+            settime(obj);
+
+        }
+        function settime(obj) { //发送验证码倒计时
+            if (countdown == 0) {
+                obj.attr('disabled',false);
+                obj.text("获取验证码");
+                countdown = 60;
+                return;
+            } else {
+                obj.attr('disabled',true);
+                obj.text("重新发送(" + countdown + ")");
+                countdown--;
+            }
+            setTimeout(function() {settime(obj) },1000);
+        }
+    </script>
+</head>
+<body>
+<div class="container">
+    <div class="form row">
+        <div class="form-horizontal col-md-offset-3" id="login_form">
+            <h3 class="form-title">登录</h3>
+            <div class="col-md-9">
+                <div class="form-group" id="input1">
+                    <i class="fa fa-user fa-lg"></i>
+                    <input class="form-control required" type="text" placeholder="手机号" id="mobile" name="mobile" autofocus="autofocus" maxlength="20"/>
+                </div>
+                <div class="form-group" style="display: flex" id="input2">
+                    <i class="fa fa-lock fa-lg"></i>
+                    <input class="form-control required" type="text" placeholder="图形验证码" id="picCode" name="picCode" maxlength="4" style="margin-top: 20px"/>
+                    <img id="pic" src="#" style="border-radius: 10px;margin-left: 10px;margin-top: 20px">
+                </div>
+                <div class="form-group" id="input3"  style="display: flex">
+                    <i class="fa fa-lock fa-lg"></i>
+                    <input class="form-control required" type="text" placeholder="短信验证码" id="smsCode" name="smsCode" maxlength="8"/>
+                    <button type="button" id="btn" style="margin-left: 10px" class="btn btn-success pull-right" name="submit"></button>
+                </div>
+                <div class="form-group" id="input4">
+                    <label class="checkbox">
+                        <input type="checkbox" name="remember" value="1"/>记住我
+                    </label>
+                </div>
+                <div class="form-group col-md-offset-9" id="input5">
+                    <button type="submit" id="submit" class="btn btn-success pull-right" name="submit">登录</button>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+</body>
+</html>

@@ -53,26 +53,26 @@ public class CaptchaUtils {
      * @param smsCode 输入的验证码
      */
     public static void validatorSMSCode(String mobile, String smsCode)  {
-        String smsSessionId = PreFixEnum.SMS + mobile;
+        String smsSessionId = PreFixEnum.SMS.getPreFix().concat(mobile);
         if (PROD.equals(propertiesName) || PRE.equals(propertiesName)) {
             Object redisSmsCode = redisService.get(smsSessionId);
             if (null == redisSmsCode) {
-                throw new CustomException(CommonExceptionCode.VERIFY_FAIL,mobile,smsCode);
+                throw new CustomException(CommonExceptionCode.SMS_VERIFY_FAIL,mobile,smsCode);
             }
             if (redisSmsCode.toString().equals(smsCode)) {
                 redisService.deleteKey(smsSessionId);
             }else {
-                throw new CustomException(CommonExceptionCode.VERIFY_FAIL,mobile,smsCode);
+                throw new CustomException(CommonExceptionCode.SMS_VERIFY_FAIL,mobile,smsCode);
             }
         }else {
             Object redisSmsCode = redisService.get(smsSessionId);
             if (null == redisSmsCode) {
-                throw new CustomException(CommonExceptionCode.VERIFY_FAIL,mobile,smsCode);
+                throw new CustomException(CommonExceptionCode.SMS_VERIFY_FAIL,mobile,smsCode);
             }
             if (SMS_CODE.equals(smsCode)) {
                 redisService.deleteKey(smsSessionId);
             }else {
-                throw new CustomException(CommonExceptionCode.VERIFY_FAIL,mobile,smsCode);
+                throw new CustomException(CommonExceptionCode.SMS_VERIFY_FAIL,mobile,smsCode);
             }
         }
     }
@@ -83,10 +83,9 @@ public class CaptchaUtils {
      * @return 6位短信验证码
      */
     public static String generateSMSCode(String mobile){
-        String smsSessionId = PreFixEnum.SMS + mobile;
-        String code;
-        code = Objects.requireNonNullElseGet(redisService.get(smsSessionId), () -> String.valueOf((int) ((Math.random() * 9 + 1) * 100000)));
-        logger.info("----手机号码: {} ---- 短信验证码: {}", smsSessionId, mobile, code);
+        String smsSessionId = PreFixEnum.SMS.getPreFix().concat(mobile);
+        String code = Objects.requireNonNullElseGet(redisService.get(smsSessionId), () -> String.valueOf((int) ((Math.random() * 9 + 1) * 100000)));
+        logger.info("----手机号码: {} ---- 短信验证码: {}",  mobile, code);
         redisService.set(smsSessionId, code,  Duration.ofMinutes(5));
         return code;
     }
@@ -127,7 +126,7 @@ public class CaptchaUtils {
         //销毁
         graphics.dispose();
         //生成图形验证码的key
-        String picKey = PreFixEnum.SMS + mobile;
+        String picKey = PreFixEnum.PIC.getPreFix().concat(mobile);
         //设置图形验证码过期时间
         redisService.set(picKey, picCode, Duration.ofMinutes(5));
         logger.info("-------picKey:{}-------picCode:{}-------", length, picKey, picCode);
@@ -150,15 +149,14 @@ public class CaptchaUtils {
      * @param picCode 图形验证码
      * @param mobile 手机号
      */
-    public static boolean validPic(String picCode, String mobile) {
-        boolean flag = false;
-        String picSessionId = PreFixEnum.PIC + mobile;
+    public static void validPic(String mobile, String picCode) {
+        String picSessionId = PreFixEnum.PIC.getPreFix().concat(mobile);
         String redisPicCode = redisService.get(picSessionId);
         if (!Strings.isNullOrEmpty(picCode) && picCode.equalsIgnoreCase(redisPicCode)) {
             redisService.deleteKey(picSessionId);
-            flag = true;
+        }else {
+            throw new CustomException(CommonExceptionCode.PIC_VERIFY_FAIL,mobile,picCode);
         }
-        return flag;
     }
 
 }

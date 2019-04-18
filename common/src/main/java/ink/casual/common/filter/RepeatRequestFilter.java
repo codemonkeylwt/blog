@@ -35,7 +35,7 @@ public class RepeatRequestFilter implements WebFilter {
         if (HttpMethod.OPTIONS.equals(request.getMethod())){
             return chain.filter(exchange);
         }
-        String key = request.getId()+":"+request.getPath().value();
+        String key = request.getId()+":"+request.getMethod().name()+":"+request.getPath().value();
         ServerHttpResponse response = exchange.getResponse();
         response.getHeaders().add("Access-Control-Allow-Origin","*");
         response.getHeaders().add("Access-Control-Allow-Headers","*");
@@ -44,7 +44,7 @@ public class RepeatRequestFilter implements WebFilter {
             logger.warn("重复请求已拦截:{}",key);
             return Mono.empty();
         }else {
-            redisService.set(key,1, Duration.ofSeconds(2));
+            redisService.set(key,1, Duration.ofSeconds(1));
         }
         return chain.filter(exchange);
     }

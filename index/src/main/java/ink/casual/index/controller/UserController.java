@@ -1,11 +1,9 @@
 package ink.casual.index.controller;
 
+import ink.casual.index.service.UserService;
 import ink.casual.user.common.model.Account;
-import ink.casual.user.common.provider.UserControllerProvider;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 /**
  * @author lwt
@@ -16,11 +14,15 @@ import org.springframework.web.bind.annotation.RestController;
 public class UserController {
 
     @Autowired
-    private UserControllerProvider userControllerProvider;
+    private UserService userService;
 
     @PostMapping
-    public Account register(Account account){
-        return userControllerProvider.register(account);
+    public Account register(@RequestBody Account account, @RequestParam("smsCode") String smsCode){
+        return userService.register(account,smsCode);
     }
 
+    @PostMapping("/login")
+    public Account login(@RequestBody Account account, @RequestParam("smsCode") String smsCode){
+        return userService.login(account, smsCode);
+    }
 }

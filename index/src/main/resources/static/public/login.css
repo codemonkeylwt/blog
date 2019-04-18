@@ -1,27 +1,70 @@
-body{
+body {
     background: url("../img/1.jpg");
-    animation-name:myfirst;
-    animation-duration:90s;
+    animation-name: myfirst;
+    animation-duration: 90s;
     /*变换时间*/
-    animation-delay:10s;
+    animation-delay: 1s;
     /*动画开始时间*/
-    animation-iteration-count:infinite;
+    animation-iteration-count: infinite;
     /*下一周期循环播放*/
-    animation-play-state:running;
+    animation-play-state: running;
     /*动画开始运行*/
 }
-@-webkit-keyframes myfirst
-{
-    0%   {background:url("../img/1.jpg");}
-    30%  {background:url("../img/1.jpg");}
-    34%  {background:url("../img/2.jpg");}
-    63%  {background:url("../img/2.jpg");}
-    67%  {background:url("../img/3.jpg");}
-    96%  {background:url("../img/3.jpg");}
-    100% {background:url("../img/1.jpg");}
+
+body:after {
+    content: "";
+    display: block;
+    position: absolute;
+    background: url("../img/1.jpg") no-repeat -9999px -9999px,
+    url("../img/2.jpg") no-repeat -9999px -9999px,
+    url("../img/3.jpg") no-repeat -9999px -9999px;
+    width: 0;
+    height: 0
 }
-.form{background: rgba(255,255,255,0.2);width:400px;margin:170px auto;}
+
+@-webkit-keyframes myfirst {
+    0% {
+        background: url("../img/1.jpg");
+    }
+    30% {
+        background: url("../img/1.jpg");
+    }
+    34% {
+        background: url("../img/2.jpg");
+    }
+    63% {
+        background: url("../img/2.jpg");
+    }
+    67% {
+        background: url("../img/3.jpg");
+    }
+    96% {
+        background: url("../img/3.jpg");
+    }
+    100% {
+        background: url("../img/1.jpg");
+    }
+}
+
+.form {
+    background: rgba(255, 255, 255, 0.2);
+    width: 400px;
+    margin: 230px auto;
+}
+
 /*阴影*/
-.fa{display: inline-block;top: 27px;left: 6px;position: relative;color: #ccc;}
-input[type="text"],input[type="password"]{padding-left:26px;}
-.checkbox{padding-left:21px;}
+.fa {
+    display: inline-block;
+    top: 27px;
+    left: 6px;
+    position: relative;
+    color: #ccc;
+}
+
+input[type="text"], input[type="password"] {
+    padding-left: 26px;
+}
+
+.checkbox {
+    padding-left: 21px;
+}

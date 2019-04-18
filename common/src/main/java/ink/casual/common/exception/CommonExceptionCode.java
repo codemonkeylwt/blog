@@ -13,7 +13,8 @@ public enum CommonExceptionCode implements CommonReturnCode {
      *
      *
      */
-    VERIFY_FAIL("20001", "验证码错误。");
+    SMS_VERIFY_FAIL("20001", "短信验证码错误。"),
+    PIC_VERIFY_FAIL("20002", "图形验证码错误。");
 
     private String code;
 

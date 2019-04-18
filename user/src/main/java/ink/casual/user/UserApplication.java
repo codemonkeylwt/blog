@@ -1,10 +1,12 @@
 package ink.casual.user;
 
+import ink.casual.common.util.BaseMongoDao;
 import ink.casual.common.util.SnowflakeIdWorker;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
 import org.springframework.context.annotation.Bean;
+import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.web.reactive.config.EnableWebFlux;
 import tk.mybatis.spring.annotation.MapperScan;
 
@@ -25,6 +27,11 @@ public class UserApplication {
     @Bean
     public SnowflakeIdWorker getSnowflakeIdWorker(){
         return new SnowflakeIdWorker(5,0);
+    }
+
+    @Bean
+    public BaseMongoDao baseMongoDao(MongoTemplate mongoTemplate){
+        return new BaseMongoDao(mongoTemplate);
     }
 
 }

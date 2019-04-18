@@ -26,12 +26,14 @@ spring:
         max-idle: 8
         min-idle: 3
         max-active: 8
+      shutdown-timeout:
   data:
     mongodb:
       database: blog
       port: 27017
       host: casual.ink
       username: lwt
-      password: 123456
+      password: liuwentao
 logging:
   path: E:/logs/blog-index
+profiles: dev

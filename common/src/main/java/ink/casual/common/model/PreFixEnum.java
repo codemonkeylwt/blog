@@ -16,7 +16,7 @@ public enum PreFixEnum {
      * 邮件key前缀
      *
      */
-    ACCOUNT_ID("A"),SMS("SMS_"),EMAIL("EMAIL_"),PIC("PIC_");
+    ACCOUNT_ID("A"),SMS("SMS:"),EMAIL("EMAIL:"),PIC("PIC:"),SESSION("ACCOUNT:"),BASE64_PREFIX("data:image/png;base64,");
 
     private String preFix;
 

@@ -1,5 +1,6 @@
 package ink.casual.user.common.util;
 
+import ink.casual.common.model.PreFixEnum;
 import ink.casual.common.util.RedisService;
 import ink.casual.user.common.model.Account;
 
@@ -18,15 +19,15 @@ public class AccountUtil {
     }
 
     public static boolean isLogin(String accountId){
-        return redisService.hasKey(accountId);
+        return redisService.hasKey(PreFixEnum.SESSION.getPreFix().concat(accountId));
     }
 
     public static void checkInLogin(Account account){
-        redisService.set(account.getAccountId(),account, Duration.ofDays(3));
+        redisService.set(PreFixEnum.SESSION.getPreFix().concat(String.valueOf(account.getAccountId())),account, Duration.ofDays(3));
     }
 
     public static void removeLogin(String accountId){
-        redisService.deleteKey(accountId);
+        redisService.deleteKey(PreFixEnum.SESSION.getPreFix().concat(accountId));
     }
 
     public static boolean verifyPassword(String p1,String p2){
