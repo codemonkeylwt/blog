@@ -16,6 +16,7 @@ import reactor.core.publisher.Flux;
 import javax.imageio.ImageIO;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
+import java.nio.charset.Charset;
 import java.util.Random;
 import java.util.concurrent.TimeUnit;
 
@@ -50,7 +51,7 @@ public class IndexController {
         ByteArrayOutputStream bao = new ByteArrayOutputStream();
         ImageIO.write(CaptchaUtils.generatorCaptcha(mobile), "png", bao);
         byte[] bytes = bao.toByteArray();
-        return new ResponseModel<>(CommonReturnCodeEnum.SUCCESS.getCode(), PreFixEnum.BASE64_PREFIX.getPreFix().concat(new String(Base64.encodeBase64(bytes))));
+        return new ResponseModel<>(CommonReturnCodeEnum.SUCCESS.getCode(), PreFixEnum.BASE64_PREFIX.getPreFix().concat(new String(Base64.encodeBase64(bytes), Charset.forName("UTF-8"))));
     }
 
     @PostMapping("/picCode")

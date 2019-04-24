@@ -3,6 +3,7 @@ package ink.casual.common.util;
 import org.apache.commons.codec.binary.Base64;
 
 import javax.crypto.Cipher;
+import java.nio.charset.Charset;
 import java.security.*;
 import java.security.spec.PKCS8EncodedKeySpec;
 import java.security.spec.X509EncodedKeySpec;
@@ -168,7 +169,7 @@ public class RSAUtil {
             // 对数据加密
             Cipher cipher = Cipher.getInstance(keyFactory.getAlgorithm());
             cipher.init(Cipher.ENCRYPT_MODE, publicKey);
-            bytes = cipher.doFinal(data.getBytes());
+            bytes = cipher.doFinal(data.getBytes(Charset.forName("UTF-8")));
         }catch (Exception e){
             throw new RuntimeException(e.getLocalizedMessage());
         }
